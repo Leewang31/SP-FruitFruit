@@ -1,6 +1,6 @@
 <template>
-<!--  <button @click="loadAndRunModel">Run Model</button>-->
-  <input @change="upload" type="file" id="file" />
+  <!--  <button @click="loadAndRunModel">Run Model</button>-->
+  <input @change="upload" type="file" id="file"/>
   <div v-if="prediction !== null">
     <p>Prediction: {{ prediction }}</p>
   </div>
@@ -14,9 +14,9 @@ export default {
   name: 'App',
   data() {
     return {
-      imgUrl:undefined,
+      imgUrl: undefined,
       prediction: null,
-      pred_classes : {
+      pred_classes: {
         0: "apple",
         1: "banana",
         2: "beetroot",
@@ -54,9 +54,10 @@ export default {
         34: "turnip",
         35: "watermelon"
       },
-      model_json : undefined
+      model_json: undefined
     };
   },
+
   methods: {
     upload(event) {
       const file = event.target.files[0];
@@ -65,6 +66,7 @@ export default {
         this.loadAndRunModel()
       }
     },
+
     async preprosess_image(image_path) {
       const img = new Image();
       img.src = image_path;
@@ -80,7 +82,7 @@ export default {
     },
     async loadAndRunModel() {
 
-      const model = await tf.loadLayersModel('http://localhost:3000/jsmodel/model.json');
+      const model = await tf.loadLayersModel('https://leewang31.github.io/fruit.json/model.json');
       const img = await this.preprosess_image(this.imgUrl);
       const inputData = img.expandDims(); // 모델의 입력 형태에 맞게 차원 확장
       const prediction = model.predict(inputData);
